@@ -1,0 +1,3 @@
+name: Beltarium
+version: '${project.version}'
+main: me.bluedyaishela.beltarium.Beltarium
