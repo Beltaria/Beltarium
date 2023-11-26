@@ -1,3 +1,7 @@
 name: Beltarium
 version: '${project.version}'
 main: me.bluedyaishela.beltarium.Beltarium
+commands:
+  beltarium:
+    description: Vous utilisez ${project.name} en version ${project.version}
+    permission: beltarium.use
