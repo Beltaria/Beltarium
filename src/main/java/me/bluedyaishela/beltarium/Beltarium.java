@@ -18,6 +18,10 @@ public final class Beltarium extends JavaPlugin {
             this.getLogger().info("Le fichier de configuration a été trouvé, chargement en cours...");
         }
         FileConfiguration config = this.getConfig();
+
+        ItemManager.init();
+
+        this.getCommand("beltarium").setExecutor(new Commands());
     }
 
     @Override
