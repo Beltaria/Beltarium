@@ -5,12 +5,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ItemManager {
-    public static List<String> getAllDeclaredFields;
     public static ItemStack BELTARIUM_NUGGET;
     public static ItemStack BELTARIUM_INGOT;
     public static ItemStack BELTARIUM_SWORD;
@@ -25,23 +23,12 @@ public class ItemManager {
 
     public static void init()
     {
-        initAllDeclaredFields();
         createBeltariumNugget();
         createBeltariumIngot();
         createBeltariumHelmet();
         createBeltariumChestplate();
         createBeltariumLeggings();
         createBeltariumBoots();
-    }
-
-    private static void initAllDeclaredFields()
-    {
-        Field[] fields = ItemManager.class.getDeclaredFields();
-        List<String> availableAttribute = new ArrayList<>();
-        for (Field field : fields) {
-            availableAttribute.add(field.getName());
-        }
-        getAllDeclaredFields = availableAttribute;
     }
 
     private static void createBeltariumNugget()

@@ -20,6 +20,7 @@ public final class Beltarium extends JavaPlugin {
         FileConfiguration config = this.getConfig();
 
         ItemManager.init();
+        Tools.init();
 
         this.getCommand("beltarium").setExecutor(new Commands());
     }

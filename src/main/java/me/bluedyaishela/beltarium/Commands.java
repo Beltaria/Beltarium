@@ -54,7 +54,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         switch (args[0])
         {
             case "give":
-                availableCommands.addAll(ItemManager.getAllDeclaredFields);
+                availableCommands.addAll(Tools.getAllDeclaredFields);
                 return this.getArgsComplete(args, availableCommands, 1);
             case "reload":
                 return null;
