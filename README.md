@@ -5,7 +5,7 @@ est un plugin ajoutant de nouveaux équipements et armures ainsi que des matéri
 
 ## Fonctionnalités
 
-- Armure en Beltarium » Augmentation des dégâts, résistance, rapidité, vie, compteur de kill, liée à l'âme, etc.
+- Armure en Beltarium » Invulnérabilité au feu, aux projectiles, aux dégâts de chute et vitesse améliorée.
 
 ## Commandes
 
