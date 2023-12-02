@@ -20,7 +20,6 @@ import java.util.Set;
 public final class Beltarium extends JavaPlugin {
 
     private static Beltarium plugin;
-    static Set<Player> LeggingsList = new LinkedHashSet<>();
     static Set<Player> FullBeltariumList = new LinkedHashSet<>();
     public static Plugin getPlugin() {
         return plugin;
@@ -48,7 +47,6 @@ public final class Beltarium extends JavaPlugin {
 
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin)plugin, new Runnable() {
             public void run() {
-                Beltarium.this.ApplyPotionEffect();
                 Beltarium.this.ApplyInvisibilityEffect();
             }
         },  60L, 120L);
@@ -58,23 +56,6 @@ public final class Beltarium extends JavaPlugin {
     {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new BeltariumListener(), this);
-    }
-
-    public void ApplyPotionEffect() {
-        for (Player player : Bukkit.getServer().getOnlinePlayers()) {
-            if (LeggingsList.contains(player)) {
-                Collection<PotionEffect> pe = player.getActivePotionEffects();
-                if (player.hasPotionEffect(PotionEffectType.SPEED)) {
-                    for (PotionEffect effect : pe) {
-                        if (effect.getType().equals(PotionEffectType.SPEED) &&
-                                effect.getAmplifier() <= 1)
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 150, 1), true);
-                    }
-                    continue;
-                }
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 150, 1, true));
-            }
-        }
     }
 
     public void ApplyInvisibilityEffect()
@@ -98,11 +79,6 @@ public final class Beltarium extends JavaPlugin {
     public static Set<Player> getFullBeltariumList()
     {
         return FullBeltariumList;
-    }
-
-    public static Set<Player> getLeggingsList()
-    {
-        return LeggingsList;
     }
 
     @Override

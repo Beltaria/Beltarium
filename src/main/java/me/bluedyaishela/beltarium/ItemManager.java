@@ -109,7 +109,7 @@ public class ItemManager {
         itemMeta.setDisplayName("§4-= §cJambières en beltarium §4=-");
 
         List<String> lore = new ArrayList<>();
-        lore.add("§cVitesse améliorée");
+        lore.add("§cVitesse renforcée");
 
         itemMeta.setLore(lore);
         itemMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5, true);
