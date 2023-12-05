@@ -1,5 +1,7 @@
 package me.bluedyaishela.beltarium;
 
+import me.bluedyaishela.beltarium.entities.BeltariumEnchantmentCreation;
+import me.bluedyaishela.beltarium.entities.BeltariumItemCreation;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -7,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ItemManager {
     public static ItemStack BELTARIUM_NUGGET;
@@ -29,7 +32,28 @@ public class ItemManager {
         createBeltariumChestplate();
         createBeltariumLeggings();
         createBeltariumBoots();
+        createBeltariumSword();
     }
+
+    private static void createBeltariumSword()
+    {
+        BeltariumItemCreation beltariumItemCreation = new BeltariumItemCreation();
+
+        List<String> lore = new ArrayList<>();
+        lore.add("§cForce herculéenne");
+
+        List<BeltariumEnchantmentCreation> enchantments = new ArrayList<>();
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DAMAGE_ALL, 7, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DURABILITY, 5, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.FIRE_ASPECT, 4, true));
+
+        BELTARIUM_SWORD = beltariumItemCreation.getBeltariumItem(Material.DIAMOND_SWORD, "§4-= §cÉpée en beltarium §4=-", lore, enchantments);
+    }
+
+//    private ItemStack getBeltariumItemStack(String displayName, List<String> lore, Map<Enchantment, Integer> enchantments)
+//    {
+//
+//    }
 
     private static void createBeltariumNugget()
     {

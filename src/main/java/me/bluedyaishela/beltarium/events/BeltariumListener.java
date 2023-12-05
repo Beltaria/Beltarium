@@ -10,6 +10,7 @@ import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
@@ -23,6 +24,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class BeltariumListener implements Listener {
 
@@ -157,6 +159,28 @@ public class BeltariumListener implements Listener {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event)
+    {
+        if (!(event.getDamager() instanceof Player)) return;
+        Player damagerPlayer = (Player) event.getDamager();
+
+        ItemStack itemStack = damagerPlayer.getItemInHand();
+        if (itemStack != null && itemStack.getType() == Material.DIAMOND_SWORD)
+        {
+            if (Items.hasLore("Force herculéenne", itemStack))
+            {
+                Random random = new Random();
+                int randomValue = random.nextInt(101);
+                if (randomValue < 10)
+                {
+                    double newDamage = event.getDamage() * 1.5;
+                    event.setDamage(newDamage);
                 }
             }
         }
