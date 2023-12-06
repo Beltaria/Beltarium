@@ -2,11 +2,9 @@ package me.bluedyaishela.beltarium.events;
 
 import me.bluedyaishela.beltarium.Beltarium;
 import me.bluedyaishela.beltarium.utils.Items;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -14,17 +12,18 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class BeltariumListener implements Listener {
 
@@ -32,6 +31,14 @@ public class BeltariumListener implements Listener {
     private final String BELTARIUM_CHESTPLATE_LORE = "Peau de fer";
     private final String BELTARIUM_LEGGINGS_LORE = "Vitesse renforcée";
     private final String BELTARIUM_BOOTS_LORE = "Chute amortie";
+
+    static Set<Player> FullBeltariumList = new LinkedHashSet<>();
+
+    private final Beltarium plugin;
+
+    public BeltariumListener(Beltarium plugin) {
+        this.plugin = plugin;
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamage(EntityDamageEvent event)
@@ -68,18 +75,12 @@ public class BeltariumListener implements Listener {
         if (event.getPlayer() instanceof Player) {
             Player player = (Player)event.getPlayer();
 
-            ItemStack helmet = player.getInventory().getHelmet();
-            ItemStack chestplate = player.getInventory().getChestplate();
-            ItemStack leggings = player.getInventory().getLeggings();
-            ItemStack boots = player.getInventory().getBoots();
-
-            if (Items.hasLore(BELTARIUM_HELMET_LORE, helmet) && Items.hasLore(BELTARIUM_CHESTPLATE_LORE, chestplate)
-                    && Items.hasLore(BELTARIUM_LEGGINGS_LORE, leggings) && Items.hasLore(BELTARIUM_BOOTS_LORE, boots)
-            ) {
-                Beltarium.getFullBeltariumList().add(player);
-            } else {
-                Beltarium.getFullBeltariumList().remove(player);
-            }
+            Bukkit.getScheduler().runTaskLater((Plugin) plugin, new Runnable() {
+                @Override
+                public void run() {
+                    ApplyInvisibilityEffect(player);
+                }
+            }, 1L);
         }
     }
 
@@ -92,6 +93,7 @@ public class BeltariumListener implements Listener {
                 || Items.hasLore(BELTARIUM_LEGGINGS_LORE, itemStack) || Items.hasLore(BELTARIUM_BOOTS_LORE, itemStack)
         ) {
             Beltarium.getFullBeltariumList().remove(player);
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
     }
 
@@ -108,7 +110,8 @@ public class BeltariumListener implements Listener {
         if (Items.hasLore(BELTARIUM_HELMET_LORE, helmet) && Items.hasLore(BELTARIUM_CHESTPLATE_LORE, chestplate)
                 && Items.hasLore(BELTARIUM_LEGGINGS_LORE, leggings) && Items.hasLore(BELTARIUM_BOOTS_LORE, boots)
         ) {
-            Beltarium.getFullBeltariumList().add(player);
+            FullBeltariumList.add(player);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999999, 0, true, true));
         }
     }
 
@@ -116,7 +119,8 @@ public class BeltariumListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event)
     {
         Player player = event.getEntity();
-        Beltarium.getFullBeltariumList().remove(player);
+        FullBeltariumList.remove(player);
+        player.removePotionEffect(PotionEffectType.INVISIBILITY);
     }
 
     @EventHandler
@@ -186,4 +190,47 @@ public class BeltariumListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onInventoryClickEvent(InventoryClickEvent event)
+    {
+        Player player = (Player) event.getWhoClicked();
+
+        Bukkit.getScheduler().runTaskLater((Plugin) plugin, new Runnable() {
+            @Override
+            public void run() {
+                ApplyInvisibilityEffect(player);
+            }
+        }, 1L);
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event)
+    {
+        Player player = event.getPlayer();
+
+        Bukkit.getScheduler().runTaskLater((Plugin) plugin, new Runnable() {
+            @Override
+            public void run() {
+                ApplyInvisibilityEffect(player);
+            }
+        }, 1L);
+    }
+
+    private void ApplyInvisibilityEffect(Player player)
+    {
+        ItemStack helmet = player.getInventory().getHelmet();
+        ItemStack chestplate = player.getInventory().getChestplate();
+        ItemStack leggings = player.getInventory().getLeggings();
+        ItemStack boots = player.getInventory().getBoots();
+
+        if (Items.hasLore(BELTARIUM_HELMET_LORE, helmet) && Items.hasLore(BELTARIUM_CHESTPLATE_LORE, chestplate)
+                && Items.hasLore(BELTARIUM_LEGGINGS_LORE, leggings) && Items.hasLore(BELTARIUM_BOOTS_LORE, boots))
+        {
+            FullBeltariumList.add(player);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 999999999, 0, true, true));
+        } else if (FullBeltariumList.contains(player)) {
+            player.removePotionEffect(PotionEffectType.INVISIBILITY);
+            FullBeltariumList.remove(player);
+        }
+    }
 }
