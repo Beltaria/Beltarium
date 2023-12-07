@@ -92,7 +92,7 @@ public class BeltariumListener implements Listener {
         if (Items.hasLore(BELTARIUM_HELMET_LORE, itemStack) || Items.hasLore(BELTARIUM_CHESTPLATE_LORE, itemStack)
                 || Items.hasLore(BELTARIUM_LEGGINGS_LORE, itemStack) || Items.hasLore(BELTARIUM_BOOTS_LORE, itemStack)
         ) {
-            Beltarium.getFullBeltariumList().remove(player);
+            FullBeltariumList.remove(player);
             player.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
     }
