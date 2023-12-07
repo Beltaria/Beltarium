@@ -33,6 +33,8 @@ public class ItemManager {
         createBeltariumLeggings();
         createBeltariumBoots();
         createBeltariumSword();
+        createBeltariumAxe();
+        createBeltariumPickaxe();
     }
 
     private static void createBeltariumSword()
@@ -49,6 +51,38 @@ public class ItemManager {
 
         BELTARIUM_SWORD = beltariumItemCreation.getBeltariumItem(Material.DIAMOND_SWORD, "§4-= §cÉpée en beltarium §4=-", lore, enchantments);
     }
+
+    private static void createBeltariumAxe()
+    {
+        BeltariumItemCreation beltariumItemCreation = new BeltariumItemCreation();
+
+        List<String> lore = new ArrayList<>();
+        lore.add("§cDestruction quantique");
+
+        List<BeltariumEnchantmentCreation> enchantments = new ArrayList<>();
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DAMAGE_ALL, 7, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DURABILITY, 5, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.FIRE_ASPECT, 4, true));
+
+        BELTARIUM_AXE = beltariumItemCreation.getBeltariumItem(Material.DIAMOND_AXE, "§4-= §cHache en beltarium §4=-", lore, enchantments);
+    }
+
+    private static void createBeltariumPickaxe()
+    {
+        BeltariumItemCreation beltariumItemCreation = new BeltariumItemCreation();
+
+        List<String> lore = new ArrayList<>();
+        lore.add("§cMineur fou");
+
+        List<BeltariumEnchantmentCreation> enchantments = new ArrayList<>();
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DIG_SPEED, 7, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.DURABILITY, 5, true));
+        enchantments.add(new BeltariumEnchantmentCreation(Enchantment.LOOT_BONUS_BLOCKS, 4, true));
+
+        BELTARIUM_PICKAXE = beltariumItemCreation.getBeltariumItem(Material.DIAMOND_PICKAXE, "§4-= §cHache en beltarium §4=-", lore, enchantments);
+    }
+
+
 
 //    private ItemStack getBeltariumItemStack(String displayName, List<String> lore, Map<Enchantment, Integer> enchantments)
 //    {

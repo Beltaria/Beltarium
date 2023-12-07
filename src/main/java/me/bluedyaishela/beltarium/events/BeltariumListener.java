@@ -188,6 +188,22 @@ public class BeltariumListener implements Listener {
                 }
             }
         }
+        if (itemStack != null && itemStack.getType() == Material.DIAMOND_AXE)
+        {
+            if (Items.hasLore("Destruction quantique", itemStack))
+            {
+                // Réaliser le code de la perte de durabilité augmentée sur les armures
+            }
+        }
+    }
+
+    private void increaseDurability(ItemStack itemStack)
+    {
+        if (itemStack != null && itemStack.getType() != Material.AIR)
+        {
+            int currentDurability = itemStack.getDurability();
+
+        }
     }
 
     @EventHandler
